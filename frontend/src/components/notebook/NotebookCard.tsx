@@ -1,20 +1,23 @@
+import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
 interface NotebookCardProps {
+  id: number;
   title: string;
   sourceCount: number;
   description: string;
 }
 
 export default function NotebookCard({
+  id,
   title,
   sourceCount,
   description,
 }: NotebookCardProps) {
   return (
-    <button
-      type="button"
-      className="group w-full rounded-xl border bg-card p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md"
+    <Link
+      href={`/notebook/${id}`}
+      className="group block w-full rounded-xl border bg-card p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="flex items-start justify-between">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
@@ -33,6 +36,6 @@ export default function NotebookCard({
       <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
         {description}
       </p>
-    </button>
+    </Link>
   );
 }

@@ -30,6 +30,7 @@ export default function NotebookList() {
       {notebooks.map((notebook) => (
         <NotebookCard
           key={notebook.id}
+          id={notebook.id}
           title={notebook.title}
           sourceCount={notebook.sourceCount}
           description={notebook.description}
