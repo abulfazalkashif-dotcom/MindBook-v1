@@ -3,7 +3,7 @@ import SourceList from "./SourceList";
 
 export default function SourcePanel() {
   return (
-    <aside className="col-span-3 border-r p-5">
+    <aside className="p-5">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold">
