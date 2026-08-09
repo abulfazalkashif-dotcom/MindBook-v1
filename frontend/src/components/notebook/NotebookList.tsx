@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface Notebook {
@@ -60,31 +61,31 @@ export default function NotebookList() {
   <section className="w-full">
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {notebooks.map((notebook) => (
-        <button
-          key={notebook.id}
-          type="button"
-          className="group rounded-xl border border-gray-200 bg-white p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
-        >
-          {/* Notebook icon */}
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-lg">
-            📖
-          </div>
+        <Link
+  key={notebook.id}
+  href={`/notebooks/${notebook.id}`}
+  className="group rounded-xl border border-gray-200 bg-white p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
+>
+  {/* Notebook icon */}
+  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-lg">
+    📖
+  </div>
 
-          {/* Notebook title */}
-          <h3 className="text-lg font-semibold text-gray-900 transition-colors group-hover:text-gray-700">
-            {notebook.title}
-          </h3>
+  {/* Notebook title */}
+  <h3 className="text-lg font-semibold text-gray-900 transition-colors group-hover:text-gray-700">
+    {notebook.title}
+  </h3>
 
-          {/* Notebook description */}
-          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">
-            {notebook.description}
-          </p>
+  {/* Notebook description */}
+  <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">
+    {notebook.description}
+  </p>
 
-          {/* Open notebook */}
-          <div className="mt-5 text-sm font-medium text-gray-700">
-            Open notebook →
-          </div>
-        </button>
+  {/* Open notebook */}
+  <div className="mt-5 text-sm font-medium text-gray-700">
+    Open notebook →
+  </div>
+</Link>
       ))}
     </div>
   </section>
