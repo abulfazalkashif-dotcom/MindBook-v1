@@ -6,6 +6,12 @@ interface Notebook {
   description: string;
 }
 
+interface Source {
+  id: number;
+  notebookId: number;
+  title: string;
+  type: string;
+}
 interface NotebookPageProps {
   params: Promise<{
     id: string;
@@ -27,12 +33,28 @@ async function getNotebook(id: string): Promise<Notebook | null> {
   return response.json();
 }
 
+async function getSources(id: string): Promise<Source[]> {
+  const response = await fetch(
+    `http://localhost:3000/api/notebooks/${id}/sources`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    return [];
+  }
+
+  return response.json();
+}
+
 export default async function NotebookPage({
   params,
 }: NotebookPageProps) {
   const { id } = await params;
 
-  const notebook = await getNotebook(id);
+const notebook = await getNotebook(id);
+const sources = await getSources(id);
 
   if (!notebook) {
     return (
@@ -138,82 +160,43 @@ export default async function NotebookPage({
             </div>
 
             {/* Source list */}
-            <div className="space-y-2 px-4 pb-5">
+<div className="space-y-2 px-4 pb-5">
 
-              {/* Source 1 */}
-              <button
-                type="button"
-                className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-300 hover:shadow-sm"
-              >
-                <div className="flex items-start gap-3">
+  {sources.length === 0 ? (
+    <div className="rounded-xl border border-dashed border-gray-300 bg-white p-5 text-center">
+      <p className="text-sm text-gray-500">
+        No sources added yet.
+      </p>
+    </div>
+  ) : (
+    sources.map((source) => (
+      <button
+        key={source.id}
+        type="button"
+        className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-300 hover:shadow-sm"
+      >
+        <div className="flex items-start gap-3">
 
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                    📄
-                  </div>
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
+            📄
+          </div>
 
-                  <div className="min-w-0">
-                    <h3 className="truncate text-sm font-medium text-gray-900">
-                      Java Fundamentals
-                    </h3>
+          <div className="min-w-0">
+            <h3 className="truncate text-sm font-medium text-gray-900">
+              {source.title}
+            </h3>
 
-                    <p className="mt-1 text-xs text-gray-500">
-                      PDF document
-                    </p>
-                  </div>
+            <p className="mt-1 text-xs text-gray-500">
+              {source.type} document
+            </p>
+          </div>
 
-                </div>
-              </button>
+        </div>
+      </button>
+    ))
+  )}
 
-              {/* Source 2 */}
-              <button
-                type="button"
-                className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-300 hover:shadow-sm"
-              >
-                <div className="flex items-start gap-3">
-
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                    📄
-                  </div>
-
-                  <div className="min-w-0">
-                    <h3 className="truncate text-sm font-medium text-gray-900">
-                      Core Java Concepts
-                    </h3>
-
-                    <p className="mt-1 text-xs text-gray-500">
-                      PDF document
-                    </p>
-                  </div>
-
-                </div>
-              </button>
-
-              {/* Source 3 */}
-              <button
-                type="button"
-                className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-gray-300 hover:shadow-sm"
-              >
-                <div className="flex items-start gap-3">
-
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                    📄
-                  </div>
-
-                  <div className="min-w-0">
-                    <h3 className="truncate text-sm font-medium text-gray-900">
-                      Object Oriented Programming
-                    </h3>
-
-                    <p className="mt-1 text-xs text-gray-500">
-                      PDF document
-                    </p>
-                  </div>
-
-                </div>
-              </button>
-
-            </div>
-
+</div>
           </aside>
 
           {/* Chat area */}
