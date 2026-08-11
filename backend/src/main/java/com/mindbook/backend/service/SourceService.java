@@ -16,7 +16,6 @@ public class SourceService {
   }
 
   public List<Source> getSourcesByNotebookId(Long notebookId) {
-
     return sourceRepository.findByNotebookId(notebookId);
   }
 }

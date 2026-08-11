@@ -1,19 +1,32 @@
 package com.mindbook.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "sources")
 public class Source {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long notebookId;
+
     private String title;
+
     private String type;
 
+    public Source() {
+    }
+
     public Source(
-            Long id,
             Long notebookId,
             String title,
-            String type
-    ) {
-        this.id = id;
+            String type) {
         this.notebookId = notebookId;
         this.title = title;
         this.type = type;
@@ -33,5 +46,17 @@ public class Source {
 
     public String getType() {
         return type;
+    }
+
+    public void setNotebookId(Long notebookId) {
+        this.notebookId = notebookId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
