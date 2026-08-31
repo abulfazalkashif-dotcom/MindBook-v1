@@ -4,7 +4,7 @@ MindBook : A production-grade AI research application inspired by NotebookLM.
 
 ## Tech Stack
 
-- Frontend: Next.js
+- Frontend: Next.js + React.js
 - Backend: Spring Boot
 - Database: PostgreSQL
 - Vector Search: pgvector
