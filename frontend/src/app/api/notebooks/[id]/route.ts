@@ -20,6 +20,7 @@ export async function GET(
       }
     );
 
+    
     if (response.status === 404) {
       return NextResponse.json(
         {

@@ -3,13 +3,11 @@ import { FileText } from "lucide-react";
 interface SourceCardProps {
   title: string;
   type: string;
-  pages: number;
 }
 
 export default function SourceCard({
   title,
   type,
-  pages,
 }: SourceCardProps) {
   return (
     <button
@@ -27,7 +25,7 @@ export default function SourceCard({
           </p>
 
           <p className="mt-1 text-xs text-muted-foreground">
-            {type} · {pages} pages
+            {type}
           </p>
         </div>
       </div>

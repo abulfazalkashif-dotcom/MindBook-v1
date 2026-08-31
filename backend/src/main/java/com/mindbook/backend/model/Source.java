@@ -4,7 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "sources")
@@ -14,30 +17,29 @@ public class Source {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long notebookId;
-
     private String title;
 
     private String type;
+
+    @ManyToOne
+    @JoinColumn(name = "notebook_id", nullable = false)
+    @JsonBackReference
+    private Notebook notebook;
 
     public Source() {
     }
 
     public Source(
-            Long notebookId,
+            Notebook notebook,
             String title,
             String type) {
-        this.notebookId = notebookId;
+        this.notebook = notebook;
         this.title = title;
         this.type = type;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Long getNotebookId() {
-        return notebookId;
     }
 
     public String getTitle() {
@@ -48,8 +50,8 @@ public class Source {
         return type;
     }
 
-    public void setNotebookId(Long notebookId) {
-        this.notebookId = notebookId;
+    public Notebook getNotebook() {
+        return notebook;
     }
 
     public void setTitle(String title) {
@@ -58,5 +60,9 @@ public class Source {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setNotebook(Notebook notebook) {
+        this.notebook = notebook;
     }
 }
