@@ -1,5 +1,6 @@
 package com.mindbook.backend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,9 @@ public class Source {
 
     private String type;
 
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
     @ManyToOne
     @JoinColumn(name = "notebook_id", nullable = false)
     @JsonBackReference
@@ -32,10 +36,13 @@ public class Source {
     public Source(
             Notebook notebook,
             String title,
-            String type) {
+            String type,
+            String content) {
+
         this.notebook = notebook;
         this.title = title;
         this.type = type;
+        this.content = content;
     }
 
     public Long getId() {
@@ -50,6 +57,10 @@ public class Source {
         return type;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public Notebook getNotebook() {
         return notebook;
     }
@@ -60,6 +71,10 @@ public class Source {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setNotebook(Notebook notebook) {
