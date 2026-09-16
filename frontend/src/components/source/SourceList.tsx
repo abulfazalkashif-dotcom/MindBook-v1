@@ -1,3 +1,6 @@
+
+import SourceCard from "./SourceCard";
+
 interface Source {
   id: number;
   title: string;
@@ -23,3 +26,4 @@ export default function SourceList({
     </div>
   );
 }
+
