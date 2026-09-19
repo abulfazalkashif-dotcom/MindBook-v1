@@ -7,12 +7,20 @@ interface Message {
   content: string;
 }
 
-export default function NotebookChat() {
+interface NotebookChatProps {
+  notebookId: string;
+}
+
+export default function NotebookChat({
+  notebookId,
+}: NotebookChatProps) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
 
     const trimmedMessage = message.trim();
@@ -34,15 +42,18 @@ export default function NotebookChat() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/notebooks/1/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: trimmedMessage,
-        }),
-      });
+      const response = await fetch(
+        `/api/notebooks/${notebookId}/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: trimmedMessage,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to get AI response");
@@ -146,7 +157,9 @@ export default function NotebookChat() {
           <div className="flex items-end gap-3 rounded-2xl border bg-muted/30 p-2">
             <textarea
               value={message}
-              onChange={(event) => setMessage(event.target.value)}
+              onChange={(event) =>
+                setMessage(event.target.value)
+              }
               onKeyDown={(event) => {
                 if (
                   event.key === "Enter" &&
